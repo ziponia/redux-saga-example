@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useReducer } from "react";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { countReducer, fetchUserById } from "./store/count.reducer";
+import axios from "axios";
+import { countActions } from "./store";
 
-function App() {
+function App(props) {
+  const dispatch = useDispatch();
+  const { count, data, status } = useSelector((store) => store.count);
+
+  const handleClick = () => {
+    // dispatch(fetchUserById());
+    // console.log(fetchUserById.fulfilled);
+    dispatch(countActions.setDataAsync());
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {/* <h1>count: {JSON.stringify(count.count)}</h1> */}
+
+      <button onClick={handleClick}>증가!</button>
+
+      {!!data && <div>{JSON.stringify(data)}</div>}
+      <p>{status}</p>
     </div>
   );
 }
